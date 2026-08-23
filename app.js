@@ -39,8 +39,8 @@ function cardTemplate(task) {
 function renderHeroPreview() {
   const preview = document.querySelector("#hero-preview");
   if (!preview) return;
-  preview.innerHTML = ["backlog", "progress", "review"].map((status) => {
-    const cards = tasks.filter((task) => task.status === status).slice(0, 2);
+  preview.innerHTML = ["backlog", "progress", "review", "done"].map((status) => {
+    const cards = tasks.filter((task) => task.status === status).slice(0, 1);
     return `<section class="mini-column" data-status="${status}">
       <header><span>${statuses[status]}</span><b>${tasks.filter((task) => task.status === status).length}</b></header>
       <div>${cards.length ? cards.map((task) => `<article class="mini-task"><small>${escapeHtml(task.project)}</small><h3>${escapeHtml(task.title)}</h3><span class="mini-priority ${task.priority}">${priorities[task.priority]}</span></article>`).join("") : '<p>Свободно</p>'}</div>
