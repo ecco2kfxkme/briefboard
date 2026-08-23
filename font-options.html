@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Briefboard — выбор шрифта</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;600;700&family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;600;700&family=Onest:wght@400;600;700&family=Prata&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: dark; --bg:#0b0c10; --text:#f5f2ee; --muted:#aaa9ae; --line:#2a2b31; --accent:#ff6b57; }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); scroll-behavior: smooth; }
+    body { margin:0; color:var(--text); background:radial-gradient(circle at 74% 6%,#33201f 0,transparent 28rem),var(--bg); font-family:Arial,sans-serif; }
+    main { width:min(1180px,calc(100% - 32px)); margin:auto; padding:70px 0 90px; }
+    header { display:grid; grid-template-columns:1fr auto; align-items:end; gap:28px; margin-bottom:48px; }
+    header p { margin:0 0 12px; color:var(--accent); font:700 12px/1 Arial,sans-serif; letter-spacing:.16em; text-transform:uppercase; }
+    header h1 { max-width:800px; margin:0; font:600 clamp(36px,6vw,82px)/.96 Arial,sans-serif; letter-spacing:-.055em; }
+    header span { max-width:260px; color:var(--muted); font:15px/1.5 Arial,sans-serif; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+    article { position:relative; min-height:390px; overflow:hidden; padding:28px; border:1px solid var(--line); border-radius:24px; background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.018)); }
+    article::after { content:""; position:absolute; width:220px; height:220px; right:-90px; bottom:-120px; border-radius:50%; background:var(--accent); filter:blur(80px); opacity:.14; pointer-events:none; }
+    .meta { display:flex; justify-content:space-between; align-items:center; gap:20px; margin-bottom:54px; font:700 11px/1 Arial,sans-serif; letter-spacing:.12em; text-transform:uppercase; }
+    .meta b { display:grid; place-items:center; width:30px; height:30px; border-radius:50%; color:#151519; background:var(--text); }
+    article h2 { max-width:570px; margin:0 0 24px; font-size:clamp(44px,5vw,74px); line-height:.96; }
+    article > p { max-width:480px; margin:0; color:#cbc8c5; font-size:17px; line-height:1.55; }
+    .onest { font-family:"Onest",sans-serif; }
+    .onest h2 { font-weight:700; letter-spacing:-.06em; }
+    .manrope { font-family:"Manrope",sans-serif; }
+    .manrope h2 { font-weight:600; letter-spacing:-.055em; }
+    .commissioner { font-family:"Commissioner",sans-serif; }
+    .commissioner h2 { font-weight:600; letter-spacing:-.045em; }
+    .rubik { font-family:"Rubik",sans-serif; }
+    .rubik h2 { font-weight:500; letter-spacing:-.045em; }
+    .prata { font-family:"Prata",serif; }
+    .prata h2 { font-weight:400; letter-spacing:-.045em; line-height:1.01; }
+    .prata > p { font-family:"Manrope",sans-serif; }
+    .cormorant { font-family:"Cormorant Garamond",serif; }
+    .cormorant h2 { font-weight:600; font-size:clamp(52px,6vw,88px); letter-spacing:-.045em; line-height:.88; }
+    .cormorant > p { font-family:"Manrope",sans-serif; }
+    footer { margin-top:26px; color:var(--muted); font:14px/1.5 Arial,sans-serif; }
+    @media (max-width:760px) { main{padding-top:36px} header{grid-template-columns:1fr} header span{max-width:520px}.grid{grid-template-columns:1fr} article{min-height:330px}.meta{margin-bottom:42px} }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div><p>Примерка типографики</p><h1>Шесть вариантов без текущего шрифта</h1></div>
+      <span>Одинаковый текст, одинаковый размер и никакой маскировки дизайном. Выберите номер по форме букв.</span>
+    </header>
+    <section class="grid">
+      <article class="onest"><div class="meta"><span>Onest · чистый и современный</span><b>01</b></div><h2>Идеи становятся работой.</h2><p>Задачи, сроки и движение проекта в одном живом пространстве.</p></article>
+      <article class="manrope"><div class="meta"><span>Manrope · уверенный и широкий</span><b>02</b></div><h2>Идеи становятся работой.</h2><p>Задачи, сроки и движение проекта в одном живом пространстве.</p></article>
+      <article class="commissioner"><div class="meta"><span>Commissioner · собранный и цифровой</span><b>03</b></div><h2>Идеи становятся работой.</h2><p>Задачи, сроки и движение проекта в одном живом пространстве.</p></article>
+      <article class="rubik"><div class="meta"><span>Rubik · мягкий и дружелюбный</span><b>04</b></div><h2>Идеи становятся работой.</h2><p>Задачи, сроки и движение проекта в одном живом пространстве.</p></article>
+      <article class="prata"><div class="meta"><span>Prata · выразительный и дорогой</span><b>05</b></div><h2>Идеи становятся работой.</h2><p>Задачи, сроки и движение проекта в одном живом пространстве.</p></article>
+      <article class="cormorant"><div class="meta"><span>Cormorant · редакционный и воздушный</span><b>06</b></div><h2>Идеи становятся работой.</h2><p>Задачи, сроки и движение проекта в одном живом пространстве.</p></article>
+    </section>
+    <footer>Напишите только номер: 01–06. Я поставлю выбранную пару во весь сайт и отдельно настрою заголовки, карточки и интерфейс.</footer>
+  </main>
+</body>
+</html>
