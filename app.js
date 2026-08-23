@@ -1,7 +1,6 @@
 const STORAGE_KEY = "briefboard.tasks.v4";
 const statuses = { backlog: "Бэклог", progress: "В работе", review: "Проверка", done: "Готово" };
 const priorities = { high: "Высокий", medium: "Средний", low: "Низкий" };
-const projectColors = ["#244c66", "#8d4f3a", "#4b6b55", "#70567c", "#7c652e"];
 const isoAfter = (days) => { const date = new Date(); date.setDate(date.getDate() + days); return date.toISOString().slice(0, 10); };
 const seed = [
   { id: crypto.randomUUID(), title: "Собрать структуру страницы кейса", project: "Portfolio", status: "progress", priority: "high", due: isoAfter(2) },
@@ -24,13 +23,12 @@ function readTasks() { try { const saved = JSON.parse(localStorage.getItem(STORA
 function save(message = "Сохранено локально") { localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks)); document.querySelector("#save-state").textContent = message; }
 function escapeHtml(value) { const node = document.createElement("span"); node.textContent = value; return node.innerHTML; }
 function taskCode(task) { return `BB-${String(tasks.indexOf(task) + 1).padStart(3, "0")}`; }
-function projectColor(project) { let value = 0; for (const char of project) value = (value + char.charCodeAt(0)) % projectColors.length; return projectColors[value]; }
 function formatDate(value) { if (!value) return "Без срока"; return new Intl.DateTimeFormat("ru-RU", { day: "2-digit", month: "short" }).format(new Date(`${value}T12:00:00`)); }
 function isOverdue(task) { return task.due && task.status !== "done" && task.due < new Date().toISOString().slice(0, 10); }
 function filteredTasks() { const needle = query.toLocaleLowerCase("ru"); return tasks.filter((task) => `${task.title} ${task.project}`.toLocaleLowerCase("ru").includes(needle) && (priorityFilter === "all" || task.priority === priorityFilter)); }
 
 function cardTemplate(task) {
-  return `<article class="task" draggable="true" data-id="${task.id}" style="--project-color:${projectColor(task.project)}" tabindex="0" aria-label="Открыть задачу ${escapeHtml(task.title)}">
+  return `<article class="task" draggable="true" data-id="${task.id}" tabindex="0" aria-label="Открыть задачу ${escapeHtml(task.title)}">
     <div class="task-top"><span class="task-id">${taskCode(task)}</span><span class="priority-label ${task.priority}"><i aria-hidden="true"></i>${priorities[task.priority]}</span></div>
     <h3>${escapeHtml(task.title)}</h3><p class="task-project">${escapeHtml(task.project)}</p>
     <button class="remove" type="button" aria-label="Удалить задачу">×</button>
@@ -49,6 +47,7 @@ function render() {
   document.querySelector("#metric-done").textContent = done;
   document.querySelector("#metric-overdue").textContent = tasks.filter(isOverdue).length;
   document.querySelector("#metric-progress").textContent = tasks.length ? `${Math.round(done / tasks.length * 100)}%` : "0%";
+  document.querySelector("#nav-count").textContent = tasks.length;
 }
 
 function notify(message, withUndo = false) {
