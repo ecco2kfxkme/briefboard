@@ -96,7 +96,7 @@ a { color: inherit; }
 .hero::after { content: ""; position: absolute; z-index: -1; inset: auto 0 0; height: 38%; background: linear-gradient(to bottom, transparent, var(--bg)); pointer-events: none; }
 .hero-art { position: absolute; z-index: -3; top: -250px; right: -200px; width: 900px; height: 900px; object-fit: cover; object-position: 60% 50%; opacity: .34; filter: blur(10px) saturate(.8); animation: breathe 14s ease-in-out infinite alternate; }
 .hero-shade { position: absolute; z-index: -2; inset: 0; background: radial-gradient(circle at 76% 42%, rgb(255 107 87 / .07), transparent 30%), linear-gradient(180deg, transparent 58%, #08090d); }
-.hero-content { position: relative; z-index: 2; width: min(1360px, calc(100% - 72px)); min-height: min(880px, 100dvh); margin: 0 auto; padding: 124px 0 70px; display: grid; grid-template-columns: minmax(0, 1.06fr) minmax(590px, 1fr); align-items: center; gap: 40px; }
+.hero-content { position: relative; z-index: 2; width: min(1360px, calc(100% - 72px)); min-height: min(880px, 100dvh); margin: 0 auto; padding: 96px 0 58px; display: grid; grid-template-columns: minmax(0, 1.06fr) minmax(590px, 1fr); align-items: center; gap: 40px; }
 .hero-copy { align-self: center; max-width: 670px; animation: rise .8s .08s both cubic-bezier(.2,.75,.25,1); }
 .hero-copy > p { margin: 0 0 20px; color: #ffc0b7; font-size: 13px; font-weight: 650; letter-spacing: -.01em; }
 .hero-copy h1 { max-width: 690px; margin: 0; font-size: clamp(54px, 5vw, 72px); line-height: .94; letter-spacing: -.068em; font-weight: 760; text-wrap: balance; }
@@ -233,7 +233,7 @@ a { color: inherit; }
   .hero { min-height: 100dvh; }
   .hero-art { width: 660px; height: 660px; top: -190px; right: -310px; object-position: 62% 50%; opacity: .28; }
   .hero-shade { background: radial-gradient(circle at 100% 15%, rgb(255 107 87 / .08), transparent 36%), linear-gradient(180deg, transparent 55%, #08090d); }
-  .hero-content { width: calc(100% - 32px); min-height: 100dvh; padding: 108px 0 34px; grid-template-columns: 1fr; align-content: center; gap: 28px; }
+  .hero-content { width: calc(100% - 32px); min-height: 100dvh; padding: 94px 0 34px; grid-template-columns: 1fr; align-content: center; gap: 28px; }
   .hero-copy { align-self: center; }
   .hero-copy > p { margin-bottom: 14px; }
   .hero-copy h1 { max-width: 540px; font-size: clamp(48px, 12.5vw, 66px); }
