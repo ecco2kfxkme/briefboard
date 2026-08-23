@@ -36,6 +36,14 @@ function cardTemplate(task) {
   </article>`;
 }
 
+function bindSpotlights() {
+  board.querySelectorAll(".task").forEach((card) => card.addEventListener("pointermove", (event) => {
+    const box = card.getBoundingClientRect();
+    card.style.setProperty("--mx", `${event.clientX - box.left}px`);
+    card.style.setProperty("--my", `${event.clientY - box.top}px`);
+  }));
+}
+
 function render() {
   const visible = filteredTasks();
   board.innerHTML = Object.entries(statuses).map(([status, label]) => {
@@ -43,11 +51,14 @@ function render() {
     return `<section class="column" data-status="${status}"><header class="column-head"><h2>${label}</h2><span>${cards.length}</span></header><div class="task-list" data-drop="${status}">${cards.length ? cards.map(cardTemplate).join("") : '<p class="empty">Нет задач в этом этапе</p>'}</div></section>`;
   }).join("");
   const done = tasks.filter((task) => task.status === "done").length;
+  const progress = tasks.length ? Math.round(done / tasks.length * 100) : 0;
   document.querySelector("#metric-active").textContent = tasks.length - done;
   document.querySelector("#metric-done").textContent = done;
   document.querySelector("#metric-overdue").textContent = tasks.filter(isOverdue).length;
-  document.querySelector("#metric-progress").textContent = tasks.length ? `${Math.round(done / tasks.length * 100)}%` : "0%";
+  document.querySelector("#metric-progress").textContent = `${progress}%`;
+  document.querySelector(".progress-metric").style.setProperty("--progress", `${progress}%`);
   document.querySelector("#nav-count").textContent = tasks.length;
+  bindSpotlights();
 }
 
 function notify(message, withUndo = false) {

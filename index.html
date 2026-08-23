@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#0c1016">
+  <meta name="theme-color" content="#080a0f">
   <meta name="description" content="Briefboard: локальная kanban-доска для небольшой команды.">
   <title>Briefboard | Командная доска</title>
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
   <a class="skip-link" href="#board">К доске</a>
@@ -26,7 +26,7 @@
 
   <div class="app-frame">
     <header class="appbar">
-      <div class="workspace-name"><span>Рабочее пространство</span><strong>Portfolio production</strong></div>
+      <div class="workspace-name"><span>Рабочее пространство</span><strong>Briefboard</strong></div>
       <div class="save-state"><i aria-hidden="true"></i><span id="save-state">Все изменения сохранены</span></div>
       <div class="top-actions">
         <button class="button secondary" id="import" type="button">Импорт</button>
@@ -40,14 +40,14 @@
       <section class="summary" id="summary" aria-labelledby="page-title">
         <div class="title-block">
           <p>Текущий спринт</p>
-          <h1 id="page-title">Задачи команды</h1>
-          <span>Соберите работу в одном месте и двигайте карточки между этапами.</span>
+          <h1 id="page-title"><span>Задачи</span><span>команды</span></h1>
+          <span>Фокус, движение, результат. Всё видно на одной доске.</span>
         </div>
         <dl class="metrics" aria-label="Сводка по задачам">
           <div><dt>Активно</dt><dd id="metric-active">0</dd></div>
           <div><dt>Готово</dt><dd id="metric-done">0</dd></div>
           <div><dt>Риск срока</dt><dd id="metric-overdue">0</dd></div>
-          <div><dt>Прогресс</dt><dd id="metric-progress">0%</dd></div>
+          <div class="progress-metric"><dt>Прогресс</dt><dd id="metric-progress">0%</dd></div>
         </dl>
       </section>
 
@@ -90,6 +90,6 @@
   <button id="drawer-backdrop" class="drawer-backdrop" type="button" aria-label="Закрыть карточку" hidden></button>
 
   <div id="toast" class="toast" role="status" aria-live="polite"><span id="toast-message"></span><button id="undo" type="button" hidden>Вернуть</button></div>
-  <script src="app.js?v=5"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>
