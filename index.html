@@ -3,55 +3,77 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Briefboard: локальная kanban-доска для продуктовых и контентных задач.">
-  <title>Briefboard - product workflow</title>
-  <link rel="stylesheet" href="style.css?v=2">
+  <meta name="theme-color" content="#244c66">
+  <meta name="description" content="Briefboard — локальная производственная kanban-доска для небольшой команды.">
+  <title>Briefboard — production workspace</title>
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
+  <a class="skip-link" href="#board">К доске</a>
+  <header class="appbar">
+    <a class="brand" href="#board" aria-label="Briefboard, к доске"><span>B</span><b>Briefboard</b></a>
+    <div class="workspace-name"><small>Рабочее пространство</small><strong>Portfolio production / 07</strong></div>
+    <div class="save-state"><i aria-hidden="true"></i><span id="save-state">Сохранено локально</span></div>
+    <div class="top-actions">
+      <button class="button secondary" id="import" type="button">Импорт</button>
+      <button class="button secondary" id="export" type="button">Экспорт</button>
+      <button class="button primary" id="open-create" type="button">+ Новая задача</button>
+      <input id="import-file" type="file" accept="application/json" hidden>
+    </div>
+  </header>
+
   <main class="shell">
-    <header class="topbar">
-      <a class="brand" href="#board" aria-label="Briefboard, к доске"><span>B</span>Briefboard</a>
-      <div class="top-actions">
-        <button class="button ghost" id="theme" type="button" aria-label="Сменить тему">Тема</button>
-        <button class="button ghost" id="import" type="button">Импорт</button>
-        <button class="button primary" id="export" type="button">Экспорт JSON</button>
-        <input id="import-file" type="file" accept="application/json" hidden>
-      </div>
-    </header>
-
-    <section class="hero" aria-labelledby="page-title">
+    <section class="summary" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">Локальный workspace</p>
-        <h1 id="page-title">Работа движется.<br>Видно почему.</h1>
+        <p class="kicker">Активный спринт · 19–25 августа</p>
+        <h1 id="page-title">Производственная доска</h1>
       </div>
-      <p>Планируйте задачи, меняйте этапы и выгружайте данные. Без регистрации и серверов.</p>
+      <dl class="metrics" aria-label="Сводка по задачам">
+        <div><dt>Активно</dt><dd id="metric-active">0</dd></div>
+        <div><dt>Готово</dt><dd id="metric-done">0</dd></div>
+        <div><dt>Просрочено</dt><dd id="metric-overdue">0</dd></div>
+        <div><dt>Прогресс</dt><dd id="metric-progress">0%</dd></div>
+      </dl>
     </section>
-
-    <section class="metrics" aria-label="Статистика доски">
-      <article><span>Всего</span><strong id="metric-total">0</strong></article>
-      <article><span>В работе</span><strong id="metric-active">0</strong></article>
-      <article><span>Готово</span><strong id="metric-done">0</strong></article>
-      <article><span>Прогресс</span><strong id="metric-progress">0%</strong></article>
-    </section>
-
-    <form id="task-form" class="composer">
-      <label>Задача<input id="title" maxlength="70" placeholder="Собрать экран онбординга" required></label>
-      <label>Проект<input id="project" maxlength="35" placeholder="Launch" required></label>
-      <label>Этап<select id="status"><option value="backlog">Бэклог</option><option value="progress">В работе</option><option value="review">Проверка</option><option value="done">Готово</option></select></label>
-      <label>Приоритет<select id="priority"><option value="high">Высокий</option><option value="medium">Средний</option><option value="low">Низкий</option></select></label>
-      <label>Срок<input id="due" type="date"></label>
-      <button class="button primary add" type="submit">Добавить задачу</button>
-    </form>
 
     <section class="toolbar" aria-label="Фильтры задач">
-      <label class="search"><span>Поиск</span><input id="search" type="search" placeholder="Название или проект"></label>
-      <label><span>Приоритет</span><select id="priority-filter"><option value="all">Любой</option><option value="high">Высокий</option><option value="medium">Средний</option><option value="low">Низкий</option></select></label>
-      <button class="button ghost" id="clear-filters" type="button">Сбросить</button>
+      <label class="search"><span>Поиск</span><input id="search" name="search" type="search" placeholder="Название или проект…" autocomplete="off"></label>
+      <label><span>Приоритет</span><select id="priority-filter" name="priority-filter"><option value="all">Любой</option><option value="high">Высокий</option><option value="medium">Средний</option><option value="low">Низкий</option></select></label>
+      <button class="link-button" id="clear-filters" type="button">Сбросить фильтры</button>
+      <div class="legend" aria-label="Обозначения"><span><i class="risk"></i> Риск срока</span><span><i class="project-key"></i> Проект</span></div>
     </section>
 
-    <section id="board" class="board" aria-label="Kanban-доска" aria-live="polite"></section>
+    <section id="board" class="board" aria-label="Kanban-доска"></section>
   </main>
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="app.js?v=2"></script>
+
+  <dialog id="create-dialog" class="task-dialog">
+    <form id="task-form" method="dialog">
+      <div class="dialog-head"><div><p>Новая запись</p><h2>Добавить задачу</h2></div><button class="icon-button" id="close-create" type="button" aria-label="Закрыть">×</button></div>
+      <label>Задача<input id="title" name="title" maxlength="70" placeholder="Например, проверить мобильный сценарий…" autocomplete="off" required></label>
+      <label>Проект<input id="project" name="project" maxlength="35" placeholder="Название проекта…" autocomplete="off" required></label>
+      <div class="form-row">
+        <label>Этап<select id="status" name="status"><option value="backlog">Бэклог</option><option value="progress">В работе</option><option value="review">Проверка</option><option value="done">Готово</option></select></label>
+        <label>Приоритет<select id="priority" name="priority"><option value="high">Высокий</option><option value="medium">Средний</option><option value="low">Низкий</option></select></label>
+      </div>
+      <label>Срок<input id="due" name="due" type="date"></label>
+      <div class="dialog-actions"><button class="button secondary" id="cancel-create" type="button">Отмена</button><button class="button primary" type="submit">Добавить</button></div>
+    </form>
+  </dialog>
+
+  <aside id="task-drawer" class="task-drawer" aria-hidden="true" aria-labelledby="drawer-title">
+    <div class="drawer-head"><div><p id="drawer-id">BB-000</p><h2 id="drawer-title">Задача</h2></div><button class="icon-button" id="close-drawer" type="button" aria-label="Закрыть карточку">×</button></div>
+    <form id="drawer-form">
+      <label>Название<input id="drawer-task-title" name="drawer-task-title" maxlength="70" required></label>
+      <label>Проект<input id="drawer-project" name="drawer-project" maxlength="35" required></label>
+      <div class="form-row"><label>Этап<select id="drawer-status" name="drawer-status"></select></label><label>Приоритет<select id="drawer-priority" name="drawer-priority"></select></label></div>
+      <label>Срок<input id="drawer-due" name="drawer-due" type="date"></label>
+      <section class="checklist" aria-labelledby="checklist-title"><div><h3 id="checklist-title">Чек-лист</h3><span>1 / 3</span></div><label><input type="checkbox" checked> Бриф подтверждён</label><label><input type="checkbox"> Проверен мобильный экран</label><label><input type="checkbox"> Получена финальная правка</label></section>
+      <button class="button primary" type="submit">Сохранить изменения</button>
+    </form>
+  </aside>
+  <button id="drawer-backdrop" class="drawer-backdrop" type="button" aria-label="Закрыть карточку" hidden></button>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"><span id="toast-message"></span><button id="undo" type="button" hidden>Вернуть</button></div>
+  <script src="app.js?v=4"></script>
 </body>
 </html>
