@@ -3,76 +3,75 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#080a0f">
-  <meta name="description" content="Briefboard: локальная kanban-доска для небольшой команды.">
+  <meta name="theme-color" content="#e4ebf6">
+  <meta name="description" content="Briefboard: локальная канбан-доска для небольшой команды.">
   <title>Briefboard | Командная доска</title>
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
   <a class="skip-link" href="#board">К доске</a>
 
-  <aside class="sidebar" aria-label="Навигация">
-    <a class="brand" href="#board" aria-label="Briefboard, к доске"><span>BB</span><b>Briefboard</b></a>
-    <nav>
-      <a class="nav-item active" href="#board"><span>Доска</span><small id="nav-count">0</small></a>
-      <a class="nav-item" href="#filters"><span>Фильтры</span></a>
-      <a class="nav-item" href="#summary"><span>Сводка</span></a>
+  <header class="topbar">
+    <a class="brand" href="#board" aria-label="Briefboard, к доске">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <b>Briefboard</b>
+    </a>
+    <nav aria-label="Навигация">
+      <a class="active" href="#board">Доска <small id="nav-count">0</small></a>
+      <a href="#filters">Фильтры</a>
+      <a href="#summary">Сводка</a>
     </nav>
-    <div class="sidebar-foot">
-      <span class="storage-icon" aria-hidden="true"></span>
-      <div><b>Локальный режим</b><small>Данные в браузере</small></div>
+    <div class="save-state"><i aria-hidden="true"></i><span id="save-state">Все изменения сохранены</span></div>
+    <div class="top-actions">
+      <button class="button utility" id="import" type="button">Импорт</button>
+      <button class="button utility" id="export" type="button">Экспорт</button>
+      <button class="button primary" id="open-create" type="button">Новая задача</button>
+      <input id="import-file" type="file" accept="application/json" hidden>
     </div>
-  </aside>
+  </header>
 
-  <div class="app-frame">
-    <header class="appbar">
-      <div class="workspace-name"><span>Рабочее пространство</span><strong>Briefboard</strong></div>
-      <div class="save-state"><i aria-hidden="true"></i><span id="save-state">Все изменения сохранены</span></div>
-      <div class="top-actions">
-        <button class="button secondary" id="import" type="button">Импорт</button>
-        <button class="button secondary" id="export" type="button">Экспорт</button>
-        <button class="button primary" id="open-create" type="button">Новая задача</button>
-        <input id="import-file" type="file" accept="application/json" hidden>
+  <main class="shell">
+    <section class="summary" id="summary" aria-labelledby="page-title">
+      <div class="title-block">
+        <p>Текущий спринт</p>
+        <h1 id="page-title">Проекты проходят здесь.</h1>
+        <span>Вся работа команды: от идеи до готового результата.</span>
       </div>
-    </header>
+      <dl class="metrics" aria-label="Сводка по задачам">
+        <div class="progress-metric"><dt>Прогресс</dt><dd id="metric-progress">0%</dd><span>завершено</span></div>
+        <div><dt>Активно</dt><dd id="metric-active">0</dd></div>
+        <div><dt>Готово</dt><dd id="metric-done">0</dd></div>
+        <div><dt>Риск срока</dt><dd id="metric-overdue">0</dd></div>
+      </dl>
+    </section>
 
-    <main class="shell">
-      <section class="summary" id="summary" aria-labelledby="page-title">
-        <div class="title-block">
-          <p>Текущий спринт</p>
-          <h1 id="page-title"><span>Задачи</span><span>команды</span></h1>
-          <span>Фокус, движение, результат. Всё видно на одной доске.</span>
+    <section class="workspace" aria-labelledby="workspace-title">
+      <div class="workspace-head">
+        <div>
+          <p>Поток задач</p>
+          <h2 id="workspace-title">Рабочая доска</h2>
         </div>
-        <dl class="metrics" aria-label="Сводка по задачам">
-          <div><dt>Активно</dt><dd id="metric-active">0</dd></div>
-          <div><dt>Готово</dt><dd id="metric-done">0</dd></div>
-          <div><dt>Риск срока</dt><dd id="metric-overdue">0</dd></div>
-          <div class="progress-metric"><dt>Прогресс</dt><dd id="metric-progress">0%</dd></div>
-        </dl>
-      </section>
-
-      <section class="toolbar" id="filters" aria-label="Фильтры задач">
-        <label class="search"><span>Поиск</span><input id="search" name="search" type="search" placeholder="Название или проект…" autocomplete="off"></label>
-        <label><span>Приоритет</span><select id="priority-filter" name="priority-filter"><option value="all">Все приоритеты</option><option value="high">Высокий</option><option value="medium">Средний</option><option value="low">Низкий</option></select></label>
-        <button class="reset-button" id="clear-filters" type="button">Сбросить</button>
-        <div class="board-view" aria-hidden="true"><span class="active"></span><span></span></div>
-      </section>
-
+        <section class="toolbar" id="filters" aria-label="Фильтры задач">
+          <label class="search"><span>Поиск</span><input id="search" name="search" type="search" placeholder="Задача или проект" autocomplete="off"></label>
+          <label><span>Приоритет</span><select id="priority-filter" name="priority-filter"><option value="all">Все приоритеты</option><option value="high">Высокий</option><option value="medium">Средний</option><option value="low">Низкий</option></select></label>
+          <button class="reset-button" id="clear-filters" type="button">Сбросить</button>
+        </section>
+      </div>
       <section id="board" class="board" aria-label="Kanban-доска"></section>
-    </main>
-  </div>
+    </section>
+  </main>
 
   <dialog id="create-dialog" class="task-dialog">
     <form id="task-form" method="dialog">
       <div class="dialog-head"><div><p>Новая задача</p><h2>Что нужно сделать?</h2></div><button class="icon-button" id="close-create" type="button" aria-label="Закрыть">×</button></div>
-      <label>Название<input id="title" name="title" maxlength="70" placeholder="Например, проверить мобильный сценарий…" autocomplete="off" required></label>
-      <label>Проект<input id="project" name="project" maxlength="35" placeholder="Название проекта…" autocomplete="off" required></label>
+      <label>Название<input id="title" name="title" maxlength="70" placeholder="Например, проверить мобильный сценарий" autocomplete="off" required></label>
+      <label>Проект<input id="project" name="project" maxlength="35" placeholder="Название проекта" autocomplete="off" required></label>
       <div class="form-row">
         <label>Этап<select id="status" name="status"><option value="backlog">Бэклог</option><option value="progress">В работе</option><option value="review">Проверка</option><option value="done">Готово</option></select></label>
         <label>Приоритет<select id="priority" name="priority"><option value="high">Высокий</option><option value="medium">Средний</option><option value="low">Низкий</option></select></label>
       </div>
       <label>Срок<input id="due" name="due" type="date"></label>
-      <div class="dialog-actions"><button class="button secondary" id="cancel-create" type="button">Отмена</button><button class="button primary" type="submit">Добавить</button></div>
+      <div class="dialog-actions"><button class="button utility" id="cancel-create" type="button">Отмена</button><button class="button primary" type="submit">Добавить</button></div>
     </form>
   </dialog>
 
@@ -90,6 +89,6 @@
   <button id="drawer-backdrop" class="drawer-backdrop" type="button" aria-label="Закрыть карточку" hidden></button>
 
   <div id="toast" class="toast" role="status" aria-live="polite"><span id="toast-message"></span><button id="undo" type="button" hidden>Вернуть</button></div>
-  <script src="app.js?v=6"></script>
+  <script src="app.js?v=7"></script>
 </body>
 </html>
