@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Briefboard — creative workflow</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <div><span class="mark">B</span><strong>Briefboard</strong></div>
+      <button id="export">Экспорт JSON</button>
+    </header>
+
+    <section class="intro">
+      <div><p>CREATIVE OPS / 04</p><h1>Проекты без хаоса.</h1></div>
+      <p class="summary">Локальная доска для быстрых продуктовых и контентных задач. Данные остаются в браузере.</p>
+    </section>
+
+    <form id="task-form">
+      <label>Задача<input id="title" maxlength="70" placeholder="Например: собрать лендинг" required></label>
+      <label>Проект<input id="project" maxlength="35" placeholder="Launch 01" required></label>
+      <label>Приоритет<select id="priority"><option value="high">Высокий</option><option value="medium">Средний</option><option value="low">Низкий</option></select></label>
+      <button>Добавить <span>↗</span></button>
+    </form>
+
+    <nav id="filters" aria-label="Фильтры">
+      <button class="active" data-filter="all">Все <span id="all-count">0</span></button>
+      <button data-filter="todo">В работе</button>
+      <button data-filter="done">Готово</button>
+    </nav>
+
+    <section id="board" aria-live="polite"></section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
