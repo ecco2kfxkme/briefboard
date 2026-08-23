@@ -8,7 +8,7 @@
   <title>Briefboard | Командная доска</title>
   <link rel="preload" href="neural-flow.png" as="image" fetchpriority="high">
   <link rel="preload" href="fonts/geist-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=13">
+  <link rel="stylesheet" href="style.css?v=14">
 </head>
 <body>
   <a class="skip-link" href="#board">К доске</a>
@@ -43,12 +43,10 @@
           <span>Задачи, сроки и движение проекта в одном живом пространстве.</span>
           <a class="hero-link" href="#board">Перейти к доске <i aria-hidden="true">↘</i></a>
         </div>
-        <dl class="metrics" aria-label="Сводка по задачам">
-          <div class="progress-metric"><dt>Прогресс</dt><dd id="metric-progress">0%</dd></div>
-          <div><dt>Активно</dt><dd id="metric-active">0</dd></div>
-          <div><dt>Готово</dt><dd id="metric-done">0</dd></div>
-          <div><dt>Риск срока</dt><dd id="metric-overdue">0</dd></div>
-        </dl>
+        <article class="hero-product" aria-label="Предпросмотр рабочей доски">
+          <header class="hero-product-head"><span>Задачи команды</span><a href="#board">Открыть доску</a></header>
+          <section class="mini-board" id="hero-preview"></section>
+        </article>
       </div>
     </section>
 
@@ -96,6 +94,6 @@
   <button id="drawer-backdrop" class="drawer-backdrop" type="button" aria-label="Закрыть карточку" hidden></button>
 
   <div id="toast" class="toast" role="status" aria-live="polite"><span id="toast-message"></span><button id="undo" type="button" hidden>Вернуть</button></div>
-  <script src="app.js?v=8"></script>
+  <script src="app.js?v=9"></script>
 </body>
 </html>

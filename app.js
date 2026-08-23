@@ -36,19 +36,26 @@ function cardTemplate(task) {
   </article>`;
 }
 
+function renderHeroPreview() {
+  const preview = document.querySelector("#hero-preview");
+  if (!preview) return;
+  preview.innerHTML = ["backlog", "progress", "review"].map((status) => {
+    const cards = tasks.filter((task) => task.status === status).slice(0, 2);
+    return `<section class="mini-column" data-status="${status}">
+      <header><span>${statuses[status]}</span><b>${tasks.filter((task) => task.status === status).length}</b></header>
+      <div>${cards.length ? cards.map((task) => `<article class="mini-task"><small>${escapeHtml(task.project)}</small><h3>${escapeHtml(task.title)}</h3><span class="mini-priority ${task.priority}">${priorities[task.priority]}</span></article>`).join("") : '<p>Свободно</p>'}</div>
+    </section>`;
+  }).join("");
+}
+
 function render() {
   const visible = filteredTasks();
   board.innerHTML = Object.entries(statuses).map(([status, label], index) => {
     const cards = visible.filter((task) => task.status === status);
     return `<section class="column" data-status="${status}"><header class="column-head" data-index="${String(index + 1).padStart(2, "0")}"><h2>${label}</h2><span>${cards.length}</span></header><div class="task-list" data-drop="${status}">${cards.length ? cards.map(cardTemplate).join("") : '<p class="empty">Нет задач в этом этапе</p>'}</div></section>`;
   }).join("");
-  const done = tasks.filter((task) => task.status === "done").length;
-  const progress = tasks.length ? Math.round(done / tasks.length * 100) : 0;
-  document.querySelector("#metric-active").textContent = tasks.length - done;
-  document.querySelector("#metric-done").textContent = done;
-  document.querySelector("#metric-overdue").textContent = tasks.filter(isOverdue).length;
-  document.querySelector("#metric-progress").textContent = `${progress}%`;
   document.querySelector("#nav-count").textContent = tasks.length;
+  renderHeroPreview();
 }
 
 function notify(message, withUndo = false) {
